@@ -18,4 +18,4 @@ Executar o projeto:
 python desafio.py
 ```
 ## Planilha
-[planilha da google](https://docs.google.com/spreadsheets/d/1Mx7dL15850KsZirob7D37QfIlSR4KPrZwToi6MDAEkA/edit?usp=sharing)
+[planilha do google](https://docs.google.com/spreadsheets/d/1Mx7dL15850KsZirob7D37QfIlSR4KPrZwToi6MDAEkA/edit?usp=sharing)
