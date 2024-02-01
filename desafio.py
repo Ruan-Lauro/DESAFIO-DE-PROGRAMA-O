@@ -1,6 +1,8 @@
+#Imports
 import gspread
 import re
 
+#Information to access the spreadsheet
 
 CODE = '1Mx7dL15850KsZirob7D37QfIlSR4KPrZwToi6MDAEkA'
 
@@ -9,21 +11,31 @@ sh = gc.open_by_key(CODE)
 
 ws = sh.worksheet('engenharia_de_software')
 
-
+#Search for information on that specific page
 values = ws.get_all_values()
 
+#Number of limit faults
 Total_absences = values[1:2]
+
+#When I repeat a variable with [] it is to access its list element
 Total_absences = Total_absences[0]
 Total_absences = Total_absences[0]
+
+#Search for the number of classes and only get the number
 Total_absences = re.findall(r'\d+', Total_absences)
+
 Total_absences = int(Total_absences[0])
 Total_absences = Total_absences*0.25
 
+#Access only values ​​from a specific column row
 selected_rows = values[3:27]  
+
 
 i = 1
 
+#Working with list values
 for row in selected_rows:
+    #I seek student information
     name = row[1:2]
     name = name[0]
     absence = row[2:3]
@@ -32,8 +44,11 @@ for row in selected_rows:
     p3 = row[5:6]
     
     absence = int(absence[0])
+
+    #I calculate the average
     Average = round(((int(p1[0])/10) + (int(p2[0])/10) + (int(p3[0])/10))/3, 1)
 
+    #I see the situation
     if(absence > Total_absences):
         Situation = "Reprovado por Falta"
     else:
@@ -44,6 +59,7 @@ for row in selected_rows:
         elif(Average >= 7):
             Situation = "Aprovado"
     
+    #I calculate your naf
     # 5 <= (m + naf)/2
     # 10 <= m + naf
     # 10 − m <= naf
@@ -58,6 +74,7 @@ for row in selected_rows:
     print(f"Name: {name}, Absence: {absence}, test one: {int(p1[0])/10}, test two: {int(p2[0])/10}, test three: {int(p3[0])/10}, Average: {Average}, Situation: {Situation}, NAF: {naf}")
     print()
 
+    #Add the values ​​to the spreadsheet in their respective places
     ws.update_cell(i + 3, 7, Situation )
     ws.update_cell(i + 3, 8, naf )
 
